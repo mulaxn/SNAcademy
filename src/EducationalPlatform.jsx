@@ -105,7 +105,7 @@ const EducationalPlatform = () => {
       ]
     }
   ];
-
+  
   const experienceOpportunities = [
     { id: 'EXP1', name: 'Tech Startup Internship', field: 'Computer Science', type: 'Internship', location: 'Remote' },
     { id: 'EXP2', name: 'Community Health Volunteer', field: 'Medical Sciences', type: 'Volunteer', location: 'Various' },
