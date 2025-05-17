@@ -1,23 +1,23 @@
-// src/pages/Signup.jsx
-import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import { useAuth } from '../auth/AuthContext'
+// src/pages/Login.jsx
+import { useState }    from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth }     from '../auth/AuthContext';
 
-export default function Signup() {
-  const [email, setEmail]       = useState('')
-  const [password, setPassword] = useState('')
-  const { signup }              = useAuth()
-  const nav                     = useNavigate()
+export default function Login() {
+  const [email, setEmail]       = useState('');
+  const [password, setPassword] = useState('');
+  const { login }               = useAuth();
+  const nav                      = useNavigate();
 
-  const onSubmit = e => {
-    e.preventDefault()
-    signup(email, password)
-    nav('/') 
-  }
+  const onSubmit = async e => {
+    e.preventDefault();
+    await login(email, password);
+    nav('/'); 
+  };
 
   return (
     <div className="max-w-md mx-auto mt-16 p-6 bg-white rounded shadow">
-      <h2 className="text-2xl mb-4">Sign Up</h2>
+      <h2 className="text-2xl mb-4">Sign In</h2>
       <form onSubmit={onSubmit} className="space-y-4">
         <div>
           <label className="block mb-1">Email</label>
@@ -43,12 +43,12 @@ export default function Signup() {
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded"
         >
-          Sign Up
+          Sign In
         </button>
       </form>
       <p className="mt-4 text-center">
-        Already have an account? <Link to="/login" className="text-blue-600">Sign in</Link>
+        Don’t have an account? <Link to="/signup" className="text-blue-600">Sign up</Link>
       </p>
     </div>
-  )
+  );
 }

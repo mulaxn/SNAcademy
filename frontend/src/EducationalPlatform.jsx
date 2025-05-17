@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from './auth/AuthContext';
+
 
 const EducationalPlatform = () => {
   // Cart state
   const [cart, setCart] = useState([]);
+  const { user, setIsAuthenticated } = useAuth();
 
   // Navigation and selection state
   const [selectedCountry, setSelectedCountry] = useState(null);
@@ -119,8 +123,32 @@ const EducationalPlatform = () => {
       <div className="w-64 bg-white shadow-md">
         <div className="p-4 bg-blue-600 text-white">
           <h1 className="text-xl font-bold">Educational Platform</h1>
+          {user && (
+            <p className="text-sm mt-1">
+              Logged in as <span className="font-semibold">{user.first_name || user.email}</span>
+            </p>
+          )}
         </div>
+
         <nav className="p-2">
+          <div className="mt-6">
+          <Link
+            to="/profile"
+            className="block w-full text-left px-3 py-2 bg-yellow-100 text-yellow-800 rounded hover:bg-yellow-200 font-medium"
+          >
+            👤 View Profile
+          </Link>
+          <button
+            onClick={() => {
+              localStorage.removeItem("token");
+              setIsAuthenticated(false);
+              window.location.href = "/login";
+            }}
+            className="mt-2 w-full px-3 py-2 bg-red-100 text-red-700 rounded hover:bg-red-200 font-medium"
+          >
+            🔓 Logout
+          </button>
+          </div>
           <h2 className="text-lg font-semibold mb-2 text-gray-700">Navigation</h2>
           <div className="flex flex-wrap mb-4">
             <button onClick={() => setActiveSection('country')} className={`px-3 py-2 ${activeSection === 'country' ? 'bg-blue-100 text-blue-600 font-medium' : 'hover:bg-gray-100'}`}>Countries</button>
