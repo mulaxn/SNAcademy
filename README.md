@@ -15,7 +15,9 @@ If you are developing a production application, we recommend using TypeScript wi
 ## 🌐 Live Demo
 
 Access the site here 👉 [snacademy-website](http://snacademy-website.s3-website-us-east-1.amazonaws.com)
-
+sign in with the dummy user email and password below : 
+Email : ss@mun.com 
+password : ss
 This project is fully deployed using free-tier AWS services, with the following stack:
 🔧 Backend
 
