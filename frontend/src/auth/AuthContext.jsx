@@ -7,46 +7,47 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
   const login = async (email, password) => {
-    try {
-      const res = await fetch("http://localhost:4000/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          query: `
-            mutation {
-              login(email: "${email}", password: "${password}") {
-                token
-                user {
-                  id
-                  email
-                  first_name
-                  last_name
-                  dob
-                }
+  try {
+    const res = await fetch("http://snacademy-backend-env.eba-avyzqkrp.us-east-2.elasticbeanstalk.com/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query: `
+          mutation {
+            login(email: "${email}", password: "${password}") {
+              token
+              user {
+                id
+                email
+                first_name
+                last_name
+                dob
               }
             }
-          `
-        })
-      });
+          }
+        `
+      })
+    });
 
-      const data = await res.json();
-      if (data.errors) {
-        alert("Login failed: " + data.errors[0].message);
-        return;
-      }
-
-      const { token, user } = data.data.login;
-      localStorage.setItem("token", token);
-      setUser(user);
-      setIsAuthenticated(true);
-    } catch (err) {
-      alert("An error occurred while logging in.");
+    const data = await res.json();
+    if (data.errors) {
+      alert("Login failed: " + data.errors[0].message);
+      return;
     }
-  };
+
+    const { token, user } = data.data.login;
+    localStorage.setItem("token", token);
+    setUser(user);
+    setIsAuthenticated(true);
+  } catch (err) {
+    alert("An error occurred while logging in.");
+  }
+};
+
 
   const signup = async (email, password, first_name, last_name, dob) => {
     try {
-      const res = await fetch("http://localhost:4000/", {
+      const res = await fetch("http://snacademy-backend-env.eba-avyzqkrp.us-east-2.elasticbeanstalk.com/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -89,16 +90,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider
-      value={{
-        isAuthenticated,
-        setIsAuthenticated,
-        user,
-        setUser,
-        login,
-        signup,
-      }}
-    >
+    <AuthContext.Provider value={{ isAuthenticated, user, login, signup }}>
       {children}
     </AuthContext.Provider>
   );
